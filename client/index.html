@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collaborative Canvas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+
+  <div id="floating-dock" class="floating-dock">
+    <div class="dock-handle">⋮⋮</div>
+    <div class="dock-section">
+      <button id="pen-tool" class="tool-btn active" title="Pen (P)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M12 19l7-7 3 3-7 7-3-3z" />
+          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+          <path d="M2 2l7.586 7.586" />
+        </svg>
+      </button>
+      <button id="eraser-tool" class="tool-btn" title="Eraser (E)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M20 20H7L2 15l9-9 9 9-5 5z" />
+          <path d="M7 20l5-5" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="dock-divider"></div>
+
+    <div class="dock-section">
+      <div class="color-display" id="color-display"></div>
+      <input type="color" id="color-picker" value="#000000" title="Color">
+      <div class="preset-colors">
+        <button class="preset-color" data-color="#000000" style="background: #000000"></button>
+        <button class="preset-color" data-color="#FF0000" style="background: #FF0000"></button>
+        <button class="preset-color" data-color="#00FF00" style="background: #00FF00"></button>
+        <button class="preset-color" data-color="#0000FF" style="background: #0000FF"></button>
+        <button class="preset-color" data-color="#FFFF00" style="background: #FFFF00"></button>
+        <button class="preset-color" data-color="#FF00FF" style="background: #FF00FF"></button>
+        <button class="preset-color" data-color="#00FFFF" style="background: #00FFFF"></button>
+        <button class="preset-color" data-color="#FFFFFF" style="background: #FFFFFF; border: 1px solid #ccc;"></button>
+      </div>
+    </div>
+
+    <div class="dock-divider"></div>
+
+    <div class="dock-section">
+      <label class="dock-label">Size</label>
+      <input type="range" id="size-slider" min="1" max="50" value="3" step="1">
+      <span id="size-value">3</span>
+    </div>
+
+    <div class="dock-divider"></div>
+
+    <div class="dock-section">
+      <button id="undo-btn" class="action-btn" title="Undo (Ctrl+Z)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M3 7v6h6" />
+          <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13" />
+        </svg>
+      </button>
+      <button id="redo-btn" class="action-btn" title="Redo (Ctrl+Y)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M21 7v6h-6" />
+          <path d="M3 17a9 9 0 019-9 9 9 0 016 2.3l3 2.7" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="dock-divider"></div>
+
+    <div class="dock-section">
+      <button id="clear-btn" class="action-btn danger" title="Clear Canvas">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M3 6h18" />
+          <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="dock-section">
+      <div id="connection-status" class="connection-status connected" title="Connected">
+        <span class="status-dot"></span>
+        <span id="user-count">1</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="cursor-preview" class="cursor-preview"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="main.js"></script>
+</body>
+
+</html>

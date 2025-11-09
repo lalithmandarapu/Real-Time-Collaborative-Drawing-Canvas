@@ -1,0 +1,323 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: #f8f9fa;
+  cursor: crosshair;
+}
+
+#canvas {
+  display: block;
+  background: white;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* Floating Dock */
+.floating-dock {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+              0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.floating-dock:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12),
+              0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dock-handle {
+  color: #999;
+  cursor: move;
+  font-size: 12px;
+  padding: 0 4px;
+  user-select: none;
+}
+
+.dock-section {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dock-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Tool Buttons */
+.tool-btn,
+.action-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.tool-btn:hover,
+.action-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  transform: scale(1.05);
+}
+
+.tool-btn:active,
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.tool-btn.active {
+  background: #007AFF;
+  color: white;
+}
+
+.tool-btn.active:hover {
+  background: #0051D5;
+}
+
+.action-btn.danger {
+  color: #FF3B30;
+}
+
+.action-btn.danger:hover {
+  background: rgba(255, 59, 48, 0.1);
+}
+
+.action-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Color Picker */
+.color-display {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #000;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.color-display:hover {
+  transform: scale(1.1);
+}
+
+#color-picker {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.preset-colors {
+  display: flex;
+  gap: 4px;
+}
+
+.preset-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.preset-color:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.preset-color:active {
+  transform: scale(0.95);
+}
+
+/* Size Control */
+.dock-label {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+}
+
+#size-slider {
+  width: 80px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(to right, #ddd 0%, #007AFF 100%);
+  border-radius: 2px;
+  outline: none;
+}
+
+#size-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #007AFF;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+#size-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+#size-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #007AFF;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+#size-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+#size-value {
+  font-size: 13px;
+  color: #333;
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Connection Status */
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.03);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34C759;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.connection-status.disconnected .status-dot {
+  background: #FF3B30;
+  animation: none;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+#user-count {
+  color: #333;
+}
+
+/* Cursor Preview */
+.cursor-preview {
+  position: fixed;
+  border-radius: 50%;
+  border: 2px solid #333;
+  pointer-events: none;
+  z-index: 999;
+  display: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.1s ease, height 0.1s ease;
+}
+
+.cursor-preview.active {
+  display: block;
+}
+
+/* Eraser Cursor */
+body.eraser-mode #canvas {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M20 20H7L2 15l9-9 9 9-5 5z"/></svg>') 12 12, auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .floating-dock {
+    flex-wrap: wrap;
+    max-width: 90vw;
+    bottom: 10px;
+  }
+
+  .dock-handle {
+    display: none;
+  }
+
+  .preset-colors {
+    flex-wrap: wrap;
+  }
+
+  #size-slider {
+    width: 60px;
+  }
+}
+
+/* Draggable Dock */
+.floating-dock.dragging {
+  cursor: move;
+  transition: none;
+}
+
+/* Loading State */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.floating-dock {
+  animation: fadeIn 0.3s ease;
+}
