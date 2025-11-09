@@ -1,0 +1,29 @@
+{
+  "name": "collaborative-canvas",
+  "version": "2.0.0",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "keywords": [
+    "canvas",
+    "collaborative",
+    "drawing",
+    "real-time",
+    "websocket",
+    "socket.io"
+  ],
+  "author": "",
+  "license": "MIT",
+  "description": "A real-time collaborative drawing application with floating dock UI and global undo/redo",
+  "dependencies": {
+    "express": "^4.21.0",
+    "socket.io": "^4.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
