@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="My first web page" />
+    <title>My First Web Page</title>
+  </head>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+    }
+    input {
+      margin: 5px;
+    }
+    canvas {
+      margin: 2px;
+      border: 1px solid black;
+    }
+    .btn-box {
+      display: flex;
+      justify-content: center;
+    }
+    .body-box {
+      display: flex;
+      justify-content: center;
+    }
+    .btn-box button:nth-child(1) {
+      margin: 5px;
+      padding: 5px 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-box button:nth-child(2) {
+      margin: 5px;
+      padding: 5px 10px;
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-box button:nth-child(3) {
+      margin: 5px;
+      padding: 5px 10px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-box button:nth-child(4) {
+      margin: 5px;
+      padding: 5px 10px;
+      background-color: #ffeb3b;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-box button:nth-child(5) {
+      margin: 5px;
+      padding: 5px 10px;
+      background-color: #9c27b0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+  <body>
+    <div class="body-box">
+      <input
+        type="range"
+        id="lineWidthRange"
+        min="1"
+        max="10"
+        step="1"
+        value="2"
+      />
+      <div class="btn-box">
+        <button data-color="black" style="background-color: #000000">
+          Black
+        </button>
+        <button data-color="red" style="background-color: #f44336">Red</button>
+        <button data-color="green" style="background-color: #4caf50">
+          Green
+        </button>
+        <button data-color="blue" style="background-color: #2196f3">
+          Blue
+        </button>
+        <button data-color="yellow" style="background-color: #ffeb3b">
+          Yellow
+        </button>
+      </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+  <script src="script.js"></script>
+</html>
